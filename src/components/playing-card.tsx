@@ -7,7 +7,7 @@ interface PlayingCardProps {
 export default function PlayingCard(props: PlayingCardProps) {
   return (
     <img
-      className="m-4 transition-transform hover:scale-105"
+      class="m-4 transition-transform hover:scale-105"
       src={`/assets/cards/${props.card.img}`}
     />
   );

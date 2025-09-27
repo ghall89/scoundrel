@@ -19,6 +19,7 @@ export default defineConfig(
           case: 'kebabCase',
         },
       ],
+      'unicorn/no-array-sort': ['off'],
     },
   }
 );

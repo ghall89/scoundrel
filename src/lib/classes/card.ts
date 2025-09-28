@@ -1,4 +1,3 @@
-// card.ts
 export const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades'] as const;
 export type CardSuit = (typeof cardSuits)[number];
 

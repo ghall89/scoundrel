@@ -1,17 +1,11 @@
-import { For } from 'solid-js';
-
-import { Deck } from './classes/deck';
-import PlayingCard from './components/playing-card';
+import { GameProvider } from './contexts/game-context';
+import GameBoard from './components/game-board';
 
 function App() {
-  const deck = new Deck();
-
-  console.log(deck.cardsInDeck);
-
   return (
-    <div class="grid grid-cols-4">
-      <For each={deck.cardsInDeck}>{(card) => <PlayingCard card={card} />}</For>
-    </div>
+    <GameProvider>
+      <GameBoard />
+    </GameProvider>
   );
 }
 

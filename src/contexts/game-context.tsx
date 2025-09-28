@@ -3,18 +3,14 @@ import { createStore } from 'solid-js/store';
 
 import { constructDeck } from '../lib/utils/construct-deck';
 import { shuffleCards } from '../lib/utils/shuffle-cards';
-import { Card } from '../lib/classes/card';
+import { handlePlay } from '../lib/utils/handle-play';
 
 import { HAND_SIZE, MIN_PLAYS } from '../lib/constants';
-import { handlePlay } from '../lib/utils/handle-play';
+import { Card } from '../lib/classes/card';
+import type { StoreType } from '../lib/types';
+
 function useProviderValue() {
-  const [store, setStore] = createStore<{
-    deck: Card[];
-    hand: Card[];
-    discard: Card[];
-    lastHandSkipped: boolean;
-    health: number;
-  }>({
+  const [store, setStore] = createStore<StoreType>({
     deck: constructDeck(),
     hand: [],
     discard: [],

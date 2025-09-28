@@ -12,4 +12,6 @@ export interface StoreType {
   discard: Card[];
   lastHandSkipped: boolean;
   health: number;
+  equippedCard?: Card;
+  prevBeatCard?: Card;
 }

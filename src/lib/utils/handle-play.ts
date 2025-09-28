@@ -2,12 +2,7 @@ import type { SetStoreFunction } from 'solid-js/store';
 import type { StoreType } from '../types';
 import type { Card } from '../classes/card';
 
-import {
-  ENEMY_SUITS,
-  WEAPON_SUIT,
-  HEALING_SUIT,
-  MAX_HEALTH,
-} from '../constants';
+import { MAX_HEALTH } from '../constants';
 
 export function handlePlay(
   currentHand: Card[],
@@ -29,17 +24,47 @@ export function handlePlay(
     case 'clubs':
     case 'spades':
       setStore((state) => {
+        let prevBeatCard = state.prevBeatCard;
+
         // deal damage
         let health = state.health;
+        let damage = selectedCard.value as number;
 
-        health = health - selectedCard.value;
+        if (
+          state.equippedCard &&
+          (!prevBeatCard || prevBeatCard?.value > selectedCard.value)
+        ) {
+          damage = selectedCard.value - state.equippedCard.value;
+          if (damage < 0) {
+            damage = 0;
+          }
+          prevBeatCard = selectedCard;
+        }
 
-        return { ...state, health, hand };
+        health = health - damage;
+
+        return {
+          ...state,
+          health,
+          hand,
+          prevBeatCard,
+        };
       });
       break;
     case 'diamonds':
       setStore((state) => {
-        return { ...state, hand };
+        if (state.equippedCard) {
+          const discard = [...state.discard];
+          discard.push(state.equippedCard);
+
+          if (state.prevBeatCard) {
+            discard.push(state.prevBeatCard);
+          }
+        }
+
+        const equippedCard = selectedCard;
+
+        return { ...state, hand, equippedCard, prevBeatCard: undefined };
       });
       break;
     case 'hearts':
@@ -55,11 +80,5 @@ export function handlePlay(
         return { ...state, health, hand };
       });
       break;
-  }
-
-  if (ENEMY_SUITS.has(selectedCard.suit)) {
-  } else if (HEALING_SUIT === selectedCard.suit) {
-  } else {
-    //
   }
 }

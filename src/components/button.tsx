@@ -5,7 +5,7 @@ export default function Button(
 ) {
   return (
     <button
-      class="m-2 bg-blue-400 p-2 text-white enabled:hover:bg-blue-300 enabled:active:bg-blue-500 disabled:opacity-75"
+      class="bg-blue-400 p-2 text-white enabled:hover:bg-blue-300 enabled:active:bg-blue-500 disabled:opacity-75"
       {...props}
     >
       {props.children}

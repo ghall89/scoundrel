@@ -5,9 +5,8 @@ import { constructDeck } from '../lib/utils/construct-deck';
 import { shuffleCards } from '../lib/utils/shuffle-cards';
 import { Card } from '../lib/classes/card';
 
-const HAND_SIZE = 4 as const;
-const MIN_PLAYS = 3 as const;
-
+import { HAND_SIZE, MIN_PLAYS } from '../lib/constants';
+import { handlePlay } from '../lib/utils/handle-play';
 function useProviderValue() {
   const [store, setStore] = createStore<{
     deck: Card[];
@@ -71,28 +70,7 @@ function useProviderValue() {
   };
 
   // logic for playing selected card
-  const playSelectedCard = (cardId: string) => {
-    const selectedCardIndex = store.hand.findIndex(
-      (card) => card.id === cardId
-    );
-
-    console.log(`Index: ${selectedCardIndex}`);
-
-    if (selectedCardIndex === -1) {
-      throw new Error(`Error: Card with ID of ${cardId} is not in hand.`);
-    }
-
-    // TODO: Implement specific logic for type of card played
-
-    setStore((state) => {
-      const hand = [...state.hand];
-      const [selectedCard] = hand.splice(selectedCardIndex, 1);
-
-      const discard = [...state.discard, selectedCard];
-
-      return { ...state, hand, discard, lastHandSkipped: false };
-    });
-  };
+  const playSelectedCard = (id: string) => handlePlay(store.hand, id, setStore);
 
   return {
     store,

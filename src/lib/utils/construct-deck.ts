@@ -1,8 +1,8 @@
-import { cardSuits, cardValues, Card } from '../classes/card';
-import type { CardSuit } from '../classes/card';
+import { Card } from '../classes/card';
+import { cardSuits, cardValues } from '../types';
 import { shuffleCards } from './shuffle-cards';
 
-const PLAYER_SUITS = new Set<CardSuit>(['hearts', 'diamonds']);
+import { ENEMY_SUITS } from '../constants';
 
 export function constructDeck(): Card[] {
   let cards: Card[] = [];
@@ -12,7 +12,7 @@ export function constructDeck(): Card[] {
     for (const value in cardValues) {
       const cardToAdd = new Card(cardSuits[suit], cardValues[value]);
 
-      if (PLAYER_SUITS.has(cardToAdd.suit) && cardToAdd.value >= 11) continue;
+      if (!ENEMY_SUITS.has(cardToAdd.suit) && cardToAdd.value >= 11) continue;
 
       cards.push(cardToAdd);
     }

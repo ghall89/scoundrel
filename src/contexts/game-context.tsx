@@ -24,9 +24,9 @@ function useProviderValue() {
 
   const dealNewHand = () => {
     setStore((state) => {
-      const deck = state.deck;
+      const deck = [...state.deck];
       const hand: Card[] = [];
-      const discard = [state.discard, ...state.hand];
+      const discard = [...state.discard, ...state.hand];
 
       while (hand.length < 4 && deck.length >= 1) {
         const cardToAdd = deck.pop();

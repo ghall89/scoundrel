@@ -3,7 +3,6 @@ import {
   useContext,
   createMemo,
   createEffect,
-  on,
   type JSX,
 } from 'solid-js';
 import { createStore } from 'solid-js/store';

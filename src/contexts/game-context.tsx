@@ -48,7 +48,7 @@ function useProviderValue() {
       store.deck.length === 0 &&
       store.gameStarted
     ) {
-      alert('You win!');
+      alert(`You won, with a score of ${store.health}!`);
       setStore('gameStarted', false);
     }
   });

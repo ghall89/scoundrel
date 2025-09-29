@@ -1,4 +1,11 @@
-import { createContext, useContext, createMemo, type JSX } from 'solid-js';
+import {
+  createContext,
+  useContext,
+  createMemo,
+  createEffect,
+  on,
+  type JSX,
+} from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 import { constructDeck } from '../lib/utils/construct-deck';
@@ -11,7 +18,8 @@ import type { StoreType } from '../lib/types';
 
 function useProviderValue() {
   const [store, setStore] = createStore<StoreType>({
-    deck: constructDeck(),
+    gameStarted: false,
+    deck: [],
     hand: [],
     discard: [],
     lastHandSkipped: false,
@@ -25,6 +33,26 @@ function useProviderValue() {
   const canSkip = createMemo(
     () => store.hand.length === HAND_SIZE && !store.lastHandSkipped
   );
+  const roomsRemaining = createMemo(() =>
+    Math.ceil(store.deck.length / HAND_SIZE)
+  );
+
+  createEffect(() => {
+    if (store.health === 0 && store.gameStarted) {
+      alert('You died!');
+      setStore('gameStarted', false);
+    }
+
+    if (
+      store.health >= 1 &&
+      store.hand.length === 0 &&
+      store.deck.length === 0 &&
+      store.gameStarted
+    ) {
+      alert('You win!');
+      setStore('gameStarted', false);
+    }
+  });
 
   // shuffle remaining cards in deck
   const shuffle = () =>
@@ -68,6 +96,12 @@ function useProviderValue() {
   // logic for playing selected card
   const playSelectedCard = (id: string) => handlePlay(store.hand, id, setStore);
 
+  const startGame = () => {
+    setStore('deck', constructDeck());
+    dealNewHand();
+    setStore('gameStarted', true);
+  };
+
   return {
     store,
     setStore,
@@ -77,6 +111,8 @@ function useProviderValue() {
     skipCurrentHand,
     canDealNewHand,
     canSkip,
+    roomsRemaining,
+    startGame,
   };
 }
 

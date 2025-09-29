@@ -1,8 +1,20 @@
+import { createMemo } from 'solid-js';
+
 import Button from './button';
-import { useGameState } from '../contexts/game-context';
+import { useGameState } from '../../contexts/game-context';
 
 export default function HUD() {
   const gameContext = useGameState();
+
+  const continueButtonText = createMemo(() => {
+    if (!gameContext?.store.gameStarted) {
+      return 'Enter Dungeon';
+    } else if (gameContext?.store.deck.length === 0) {
+      return 'Exit Dungeon';
+    } else {
+      return 'Next Room';
+    }
+  });
 
   return (
     <div class="flex justify-between border-b border-b-slate-200 bg-slate-100 p-4 max-sm:flex-col">
@@ -13,7 +25,7 @@ export default function HUD() {
           }}
           disabled={!gameContext?.canDealNewHand()}
         >
-          Deal
+          {continueButtonText()}
         </Button>
         <Button
           onClick={() => {
@@ -21,13 +33,12 @@ export default function HUD() {
           }}
           disabled={!gameContext?.canSkip()}
         >
-          Skip
+          Skip Room
         </Button>
       </div>
       <div class="flex items-center gap-3">
         <span>Health Remaining: {gameContext?.store.health}</span>
-        <span>Cards in Deck: {gameContext?.store.deck.length}</span>
-        <span>Cards in Discard: {gameContext?.store.discard.length}</span>
+        <span>Rooms Left: {gameContext?.roomsRemaining()}</span>
       </div>
     </div>
   );

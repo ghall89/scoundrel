@@ -25,7 +25,7 @@ export class Card {
       case 12:
         return 'Q';
       case 13:
-        return 'J';
+        return 'K';
       case 14:
         return 'A';
       default:

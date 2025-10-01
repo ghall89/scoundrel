@@ -7,11 +7,10 @@ import {
 } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-import { constructDeck } from '../lib/utils/construct-deck';
 import { shuffleCards } from '../lib/utils/shuffle-cards';
 import { handlePlay } from '../lib/utils/handle-play';
 
-import { HAND_SIZE, MIN_PLAYS } from '../lib/constants';
+import { HAND_SIZE, MIN_PLAYS, INITIAL_STATE } from '../lib/constants';
 import { Card } from '../lib/classes/card';
 import type { StoreType } from '../lib/types';
 
@@ -22,7 +21,7 @@ function useProviderValue() {
     hand: [],
     discard: [],
     lastHandSkipped: false,
-    health: 20,
+    health: 0,
   });
 
   const canDealNewHand = createMemo(
@@ -92,13 +91,11 @@ function useProviderValue() {
     dealNewHand();
   };
 
-  // logic for playing selected card
   const playSelectedCard = (id: string) => handlePlay(store.hand, id, setStore);
 
   const startGame = () => {
-    setStore('deck', constructDeck());
+    setStore(INITIAL_STATE);
     dealNewHand();
-    setStore('gameStarted', true);
   };
 
   return {

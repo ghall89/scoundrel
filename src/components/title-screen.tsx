@@ -1,5 +1,3 @@
-import { createSignal } from 'solid-js';
-
 import Button from './ui/button';
 import { useGameState } from '../contexts/game-context';
 
@@ -8,11 +6,9 @@ import Modal from './ui/modal';
 export default function TitleScreen() {
   const gameContext = useGameState();
 
-  const [modalOpen, setModalOpen] = createSignal(false);
-
   return (
     <>
-      <div class="flex h-screen flex-col items-center justify-center gap-10">
+      <div class="m-4 flex h-screen flex-col items-center justify-center gap-10">
         <div class="text-center">
           <h1 class="text-4xl font-bold uppercase">Scoundrel</h1>
           <h2 class="text-xl">Based on the game designed by Zach Gage.</h2>
@@ -62,8 +58,8 @@ export default function TitleScreen() {
                 room, but will move the current room to the bottom of the deck.
               </p>
               <p>
-                You can skip as many times as you'd like, as long as you did not
-                skip the previous room.
+                You can skip as many times as you'd like, however you cannot
+                skip 2 rooms in a row.
               </p>
             </div>
           </Modal>

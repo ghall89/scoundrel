@@ -8,7 +8,7 @@ export default function TitleScreen() {
 
   return (
     <>
-      <div class="m-4 flex h-screen flex-col items-center justify-center gap-10">
+      <div class="mx-4 flex h-screen flex-col items-center justify-center gap-10">
         <div class="text-center">
           <h1 class="text-4xl font-bold uppercase">Scoundrel</h1>
           <h2 class="text-xl">Based on the game designed by Zach Gage.</h2>

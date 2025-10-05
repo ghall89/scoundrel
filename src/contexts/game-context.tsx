@@ -31,8 +31,8 @@ function useProviderValue() {
   const canSkip = createMemo(
     () => store.hand.length === HAND_SIZE && !store.lastHandSkipped
   );
-  const roomsRemaining = createMemo(() =>
-    Math.ceil(store.deck.length / HAND_SIZE)
+  const roomsRemaining = createMemo(
+    () => Math.ceil(store.deck.length / HAND_SIZE) + 1
   );
 
   createEffect(() => {

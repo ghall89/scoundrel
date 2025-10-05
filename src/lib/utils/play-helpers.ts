@@ -65,7 +65,8 @@ export function restoreHealth(state: StoreType, selectedCard: Card) {
   let health = state.health + selectedCard.value;
 
   // ensure health never exceeds maximum
-  if (health > MAX_HEALTH) {
+  // unless its the final room (for scoring)
+  if (health > MAX_HEALTH && state.deck.length > 0) {
     health = MAX_HEALTH;
   }
 

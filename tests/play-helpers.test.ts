@@ -79,11 +79,21 @@ test('selected card replaces the eqipped card', () => {
 test('player health restored by value of the card, does not go above 20', () => {
   const state: StoreType = {
     ...INITIAL_STATE,
-    health: 10,
+    health: 11,
   };
 
-  expect(restoreHealth(state, new Card('hearts', 3)).health).toBe(13);
-  expect(restoreHealth(state, new Card('hearts', 5)).health).toBe(15);
+  expect(restoreHealth(state, new Card('hearts', 3)).health).toBe(14);
+  expect(restoreHealth(state, new Card('hearts', 5)).health).toBe(16);
+  expect(restoreHealth(state, new Card('hearts', 9)).health).toBe(20);
   expect(restoreHealth(state, new Card('hearts', 10)).health).toBe(20);
-  expect(restoreHealth(state, new Card('hearts', 11)).health).toBe(20);
+});
+
+test('player health restored goes beyond 20 when its the final hand', () => {
+  const state: StoreType = {
+    ...INITIAL_STATE,
+    deck: [],
+    health: 15,
+  };
+
+  expect(restoreHealth(state, new Card('hearts', 10)).health).toBe(25);
 });

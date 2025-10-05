@@ -48,8 +48,9 @@ export default function TitleScreen() {
               </p>
               <p>
                 Cards of the heart suit will heal you based on their value.
-                However, your health can not exceed 20. You can play hearts if
-                you are at full health, but nothing will happen.
+                However, your health can not exceed 20, except in the final
+                room. You can play hearts if you are at full health, but nothing
+                will happen.
               </p>
               <h2 class="font-bold">Skipping</h2>
               <p>

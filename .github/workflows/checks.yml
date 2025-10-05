@@ -1,0 +1,31 @@
+name: Run Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  bun-series:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 'latest'
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run checks in sequence
+        run: |
+          set -euo pipefail
+          SCRIPTS=(check:format check:lint test)
+          for s in "${SCRIPTS[@]}"; do
+            echo "Running bun run ${s}"
+            bun run "${s}"
+          done

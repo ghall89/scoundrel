@@ -1,4 +1,3 @@
-import Button from './ui/button';
 import { useGameState } from '../contexts/game-context';
 
 import Modal from './ui/modal';
@@ -14,9 +13,9 @@ export default function TitleScreen() {
           <h2 class="text-xl">Based on the game designed by Zach Gage.</h2>
         </div>
         <div class="flex gap-4">
-          <Button onClick={() => gameContext?.startGame()}>
+          <button class="btn" onClick={() => gameContext?.startGame()}>
             Enter Dungeon
-          </Button>
+          </button>
           <Modal label="How To Play">
             <div class="[&>p]:mb-2">
               <p>

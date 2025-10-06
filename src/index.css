@@ -1,1 +1,7 @@
 @import 'tailwindcss';
+
+@layer components {
+  .btn {
+    @apply rounded-sm bg-amber-300 p-2 text-black enabled:hover:bg-amber-200 enabled:active:bg-amber-400 disabled:opacity-75;
+  }
+}

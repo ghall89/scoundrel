@@ -1,9 +1,16 @@
+import { onMount, Show } from 'solid-js';
 import { useGameState } from '../contexts/game-context';
+import { useHighScore } from '../hooks/use-high-score';
 
 import Modal from './ui/modal';
 
 export default function TitleScreen() {
   const gameContext = useGameState();
+  const { highScore, storeHighScore } = useHighScore();
+
+  onMount(() => {
+    storeHighScore(gameContext?.store.health ?? 0);
+  });
 
   return (
     <>
@@ -11,6 +18,9 @@ export default function TitleScreen() {
         <div class="text-center">
           <h1 class="text-4xl font-bold uppercase">Scoundrel</h1>
           <h2 class="text-xl">Based on the game designed by Zach Gage.</h2>
+          <Show when={highScore() > 0}>
+            <span>Your high score is: {highScore()}</span>
+          </Show>
         </div>
         <div class="flex gap-4">
           <button class="btn" onClick={() => gameContext?.startGame()}>

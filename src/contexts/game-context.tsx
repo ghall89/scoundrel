@@ -42,7 +42,7 @@ function useProviderValue() {
       setStore('gameStarted', false);
     }
 
-    // win game when no health remains
+    // win game when hand and deck are empty
     if (
       store.health >= 1 &&
       store.hand.length === 0 &&
@@ -54,7 +54,7 @@ function useProviderValue() {
     }
 
     // deal new hand when current hand is empty
-    if (canDealNewHand() && store.hand.length === 0) {
+    if (canDealNewHand() && store.hand.length === 0 && store.gameStarted) {
       dealNewHand();
     }
   });

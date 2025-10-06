@@ -21,6 +21,7 @@ export default defineConfig(
         },
       ],
       'unicorn/no-array-sort': ['off'],
+      'unicorn/prefer-ternary': ['off'],
     },
   }
 );

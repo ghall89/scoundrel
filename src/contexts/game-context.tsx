@@ -102,6 +102,7 @@ function useProviderValue() {
 
   const startGame = () => {
     setStore(INITIAL_STATE);
+    shuffle();
     dealNewHand();
   };
 

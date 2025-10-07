@@ -1,7 +1,5 @@
 import { Show, createSignal, type JSX } from 'solid-js';
 
-import Button from './button';
-
 interface ModalProps {
   label: string;
   children: JSX.Element;
@@ -20,7 +18,14 @@ export default function Modal(props: ModalProps) {
 
   return (
     <>
-      <Button on:click={handleOpen}>{props.label}</Button>
+      <button
+        class="btn"
+        on:click={handleOpen}
+        aria-haspopup="dialog"
+        aria-expanded={open()}
+      >
+        {props.label}
+      </button>
       <Show when={open()}>
         <div
           class="absolute top-0 left-0 flex h-screen w-screen items-center justify-center bg-black/50"
@@ -37,7 +42,9 @@ export default function Modal(props: ModalProps) {
               <div class="absolute bottom-0 left-0 h-10 w-full bg-gradient-to-t from-white to-transparent" />
             </div>
             <div class="p-4">
-              <Button on:click={handleClose}>Close</Button>
+              <button class="btn" on:click={handleClose}>
+                Close
+              </button>
             </div>
           </div>
         </div>

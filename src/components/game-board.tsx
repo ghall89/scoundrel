@@ -1,12 +1,27 @@
-import { For, Show, Switch, Match } from 'solid-js';
+import { For, Show, Switch, Match, onMount } from 'solid-js';
 
 import { useGameState } from '../contexts/game-context';
+import handleKeyPress from '../lib/utils/handle-key-press';
 import PlayingCard from './ui/playing-card';
 import HUD from './ui/hud';
 import TitleScreen from './title-screen';
 
 export default function GameBoard() {
   const gameContext = useGameState();
+
+  onMount(() => {
+    const handleEvent = (e: KeyboardEvent) => {
+      if (gameContext) {
+        handleKeyPress(e, gameContext);
+      }
+    };
+
+    document.addEventListener('keydown', handleEvent);
+
+    return () => {
+      document.removeEventListener('keydown', handleEvent);
+    };
+  });
 
   return (
     <main class="bg-cyan-500 text-white">
@@ -18,8 +33,9 @@ export default function GameBoard() {
               <For each={gameContext?.store.hand}>
                 {(card) => (
                   <button
-                    onClick={() => gameContext?.playSelectedCard(card.id)}
-                    class="m-4 w-fit transition-transform hover:scale-105"
+                    on:click={() => gameContext?.playSelectedCard(card.id)}
+                    id={card.id}
+                    class="m-4 w-fit transition-transform hover:scale-105 focus:scale-105 focus:outline-0"
                   >
                     <PlayingCard card={card} />
                   </button>

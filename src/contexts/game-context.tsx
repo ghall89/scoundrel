@@ -36,11 +36,13 @@ function useProviderValue() {
   );
 
   createEffect(() => {
+    // lose game when health runs out
     if (store.health === 0 && store.gameStarted) {
       alert('You died!');
       setStore('gameStarted', false);
     }
 
+    // win game when hand and deck are empty
     if (
       store.health >= 1 &&
       store.hand.length === 0 &&
@@ -49,6 +51,11 @@ function useProviderValue() {
     ) {
       alert(`You won, with a score of ${store.health}!`);
       setStore('gameStarted', false);
+    }
+
+    // deal new hand when current hand is empty
+    if (canDealNewHand() && store.hand.length === 0 && store.gameStarted) {
+      dealNewHand();
     }
   });
 
@@ -95,6 +102,7 @@ function useProviderValue() {
 
   const startGame = () => {
     setStore(INITIAL_STATE);
+    shuffle();
     dealNewHand();
   };
 

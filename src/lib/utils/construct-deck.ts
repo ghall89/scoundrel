@@ -1,10 +1,9 @@
 import { Card } from '../classes/card';
-import { shuffleCards } from './shuffle-cards';
 
 import { ENEMY_SUITS, CARD_SUITS, CARD_VALUES } from '../constants';
 
 export function constructDeck(): Card[] {
-  let cards: Card[] = [];
+  const cards: Card[] = [];
 
   // ensure no face cards or aces of hearts or diamonds are added to the deck
   for (const suit in CARD_SUITS) {
@@ -16,8 +15,6 @@ export function constructDeck(): Card[] {
       cards.push(cardToAdd);
     }
   }
-
-  cards = shuffleCards(cards);
 
   return cards;
 }
